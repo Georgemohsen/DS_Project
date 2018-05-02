@@ -1,0 +1,39 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+        <title>
+            Registration Page
+        </title>
+    </head>
+    <body>
+    <header>
+    {% if user.is_authenticated %}
+        <div>
+            <ul>
+            <li><a class="Home" href="/home">Home</a></li>
+            <li><a class="Profile" href="/accounts/Profile">Profile</a></li>
+            </ul>
+        </div>
+        <div>
+        <form action="/accounts/logout/" method="post">
+        {% csrf_token %}
+         <div class="btn-style">
+            <input type="submit" value="logout">
+         </div>
+        </form>
+    </div>
+    {% else  %}
+        <div>
+            <ul>
+            <li><a class="Home" href="/home">Home</a></li>
+            </ul>
+        </div>
+        </header>
+    {% endif %}
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

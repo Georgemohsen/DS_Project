@@ -1,0 +1,62 @@
+
+li a.active {
+    color: white;
+    background-color: #3A4B53;
+}
+body {
+    background:#F5F7F8;
+}
+.site-form {
+    float:left
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+li a.active {
+    color: white;
+    background-color: #4CAF50;
+}
+.Site-login {
+    float:right;
+    position:relative;
+    bottom:35px;
+}
+.status-blog {
+    border:1px solid;
+    margin:60px;
+    padding:8px;
+    width:500px;
+}
+.btn-style {
+    float:right;
+    position:relative;
+    bottom:36px;
+    right:10px;
+    border: 1px solid #777777;
+    font: bold 11px 'Trebuchet MS';
+}
+
+

@@ -1,0 +1,22 @@
+{% extends "base_layout.html" %}
+{
+{% block content %}
+    <h1>Welcome {{ user }} </h1>
+    <form action="/home/"  method="post">
+        {% csrf_token %}
+        <textarea class="text-area" name="body" cols="50" rows="5" required id="id_body"></textarea>
+        <div>
+            <input type="submit" value="Post">
+        </div>
+    </form>
+    <div>
+        {% for post in posts %}
+            <div class="status-blog">
+                <h2>
+                    {{ post.body }}
+                </h2>
+                <p>{{ post.date }}</p>
+            </div>
+    </div>
+{% endfor %}
+{% endblock %}
