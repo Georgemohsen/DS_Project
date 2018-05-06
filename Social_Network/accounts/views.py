@@ -73,3 +73,25 @@ def user_friends(request):
     friends = friend.users.all()
     args = {'others': others, 'friends': friends}
     return render(request, 'accounts/friends.html', args)
+
+from django.http import JsonResponse
+@login_required
+def download_my_data(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+        profile = user.userprofile
+        obj = {
+            'name': user.username,
+            'about': profile.about,
+            'date of Birth': profile.date_of_birth,
+            'phone': profile.phone,
+            'city': profile.city,
+            'friends': []
+        }
+        friend = Friend.objects.get(current_user=request.user)
+        friends = friend.users.all()
+        for friend in friends:
+            obj['friends'].append(friend.username)
+        response = JsonResponse(obj, content_type='application/json', json_dumps_params={'indent': 4})
+        response['Content-Disposition'] = 'attachment; filename="data.json"'
+        return response
