@@ -1,0 +1,23 @@
+{% extends "base_layout.html" %}
+
+{% block content %}
+
+    <h1>Friends</h1>
+    {% for friend in friends %}
+       <h3><a style="color: cornflowerblue" href="{% url 'accounts:profile_with_pk' pk=friend.pk %}">{{ friend.username }}</a></h3>
+        <a href="{% url 'home:change_friends' operation='remove' pk=friend.pk %}" >
+            <input type="submit" value="Remove Friend">
+        </a>
+    {% endfor %}
+    <h1>Other People</h1>
+    {% for other in others %}
+
+        <h3><a style="color: cornflowerblue" href="{% url 'accounts:profile_with_pk' pk=other.pk %}">{{ other.username }}</a></h3>
+        <a href="{% url 'home:change_friends' operation='add' pk=other.pk %}"  >
+            {% if other not in friends %}
+                <input type="submit" value="Add Friend">
+            {% endif %}
+        </a>
+    {% endfor %}
+
+{% endblock %}

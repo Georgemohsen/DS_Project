@@ -13,15 +13,17 @@
     {% if user.is_authenticated %}
         <div>
             <ul>
-            <li><a class="Home" href="/home">Home</a></li>
-            <li><a class="Profile" href="/accounts/Profile">Profile</a></li>
+            <li><a class="Home" href={% url 'home:post' %}>Home</a></li>
+            <li><a class="Profile" href={% url 'accounts:profile' %}>Profile</a></li>
+            <li><a class="Edit Profile" href={% url 'accounts:editProfile' %}>Edit Profile</a></li>
+             <li><a class="Friends" href={% url 'accounts:friends' %}>Friends</a></li>
             </ul>
         </div>
         <div>
-        <form action="/accounts/logout/" method="post">
+        <form action={% url 'accounts:logout' %} method="post">
         {% csrf_token %}
-         <div class="btn-style">
-            <input type="submit" value="logout">
+         <div>
+            <input type='submit' value="logout">
          </div>
         </form>
     </div>
@@ -31,8 +33,14 @@
             <li><a class="Home" href="/home">Home</a></li>
             </ul>
         </div>
-        </header>
+        <div>
+            <form action="{% url 'accounts:sign_up' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="SignUp">
+            </form>
+        </div>
     {% endif %}
+    </header>
         {% block content %}
         {% endblock %}
     </body>

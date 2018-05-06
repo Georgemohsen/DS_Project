@@ -39,16 +39,16 @@ li a.active {
     color: white;
     background-color: #4CAF50;
 }
-.Site-login {
-    float:right;
-    position:relative;
-    bottom:35px;
-}
+
 .status-blog {
-    border:1px solid;
-    margin:60px;
-    padding:8px;
+    border-radius: 5px;
+    background-color: #FFE4C4;
+    padding: 20px;
     width:500px;
+    margin: 25px;
+    position:relative;
+    left:27px;
+    box-shadow: 5px 8px green
 }
 .btn-style {
     float:right;
@@ -58,5 +58,143 @@ li a.active {
     border: 1px solid #777777;
     font: bold 11px 'Trebuchet MS';
 }
+.post-style {
+    padding:60px;
+}
 
 
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+    position: relative;
+    top: 30px;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 0px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 30px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+
+input[value=logout]{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    float:right;
+    position:relative;
+    bottom:56px;
+}
+
+input[value=Post]{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    position:relative;
+    bottom:56px;
+    left:55px;
+}
+
+input[value=SignUp]{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    float:right;
+    position:relative;
+    bottom:56px;
+}
+.login-style {
+    border-radius: 5px;
+    background-color: #FFE4C4;
+    padding: 20px;
+    width:500px;
+    position: relative;
+    top: 60px;
+    margin: auto;
+}
+input[value=login]:hover {
+    background-color: #45a049;
+}
+input[value=login]{
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+input[type=text],[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[value=Like] {
+    width: 15%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    position:relative;
+    float:right;
+    bottom:35px;
+}
+
+.like-text {
+  position:relative;
+  left:280px;
+  top:10px;
+}

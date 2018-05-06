@@ -4,8 +4,11 @@
     <div>
         <form class="Site-login" action="/accounts/login/" method="post">
         {% csrf_token %}
-         <div>
+         <div class="login-style">
             {{ form }}  <input type="submit" value="login">
+             {% if request.GET.next %}
+                <input type="hidden" name="next" value= {{ request.GET.next }}>
+             {% endif %}
          </div>
         </form>
     </div>
