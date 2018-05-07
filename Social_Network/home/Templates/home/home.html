@@ -1,5 +1,5 @@
 {% extends "base_layout.html" %}
-{
+
 {% block content %}
     <h1 style="margin-left:55px;margin-bottom:0px; " >Welcome {{ user }} </h1>
     <form action="/home/"  method="post">
@@ -18,11 +18,11 @@
                 <p>{{ post.date }}</p>
                 <p>Posted by : {{ post.author }}</p>
                 <p class="like-text">{{ post.likes }} People Likes this</p>
-                    <form method="post" action="/home/like/{{ post.id }}/">
-                        {% csrf_token %}
-                        <input type="submit" value="Like" name="like-btn">
-                    </form>
+                <form method="post" action="/home/like/{{ post.id }}/">
+                    {% csrf_token %}
+                    <input type="submit" value="Like" name="like-btn">
+                </form>
             </div>
+        {% endfor %}
     </div>
-{% endfor %}
 {% endblock %}

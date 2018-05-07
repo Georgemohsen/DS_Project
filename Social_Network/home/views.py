@@ -20,25 +20,37 @@ def status(request):
             return redirect('home:post')
     else:
         posts = Post.objects.all().order_by('-date')
-        users = User.objects.all()
-
-        query = request.GET.get("q")
-        if query:
-            posts = posts.filter(Q(body__icontains=query) |
-                                 Q(author__username__icontains=query)).distinct()
+        # users = User.objects.all()
+        # query = request.GET.get("q")
+        # if query:
+        #     posts = posts.filter(Q(body__icontains=query) |
+        #                          Q(author__username__icontains=query)).distinct()
+        # friend = Friend.objects.get(current_user=request.user)
+        # friends = friend.users.all()
+        # flag=False
+        # for post in posts:
+        #     for friend in friends:
+        #         if post.author == friend :
+        #                 posts = posts.filter(Q(body__icontains=post.body) |
+        #                                      Q(author__username__icontains=post.author))
+        #                 flag=True
+        # if flag is True:
+        #     args = {'posts': posts}
+        # else:
+        #     args = {}
+        filtered_posts = []
         friend = Friend.objects.get(current_user=request.user)
+        if not friend:
+            return render(request, 'home/home.html', {})
         friends = friend.users.all()
-        flag=False
         for post in posts:
             for friend in friends:
-                if post.author == friend :
-                        posts = posts.filter(Q(body__icontains=post.body) |
-                                             Q(author__username__icontains=post.author))
-                        flag=True
-        if flag is True:
-            args = {'posts': posts}
-        else:
-            args = {}
+                if post.author == request.user or post.author in friends:
+                    filtered_posts.append(post)
+                    break
+        args = {
+            'posts': filtered_posts
+        }
         return render(request, 'home/home.html', args)
 
 

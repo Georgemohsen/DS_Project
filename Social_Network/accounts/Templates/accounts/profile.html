@@ -12,8 +12,24 @@
     <form action="{% url 'accounts:download-my-data' %}" method="post">
       {% csrf_token %}
       <!-- <input type="hidden" name="format" value="json"> -->
-      <input type="submit" value="Download my data (JSON)">
+      <input type="submit" value="Download my data (JSON)" class="download-my-data">
     </form>
   {% endif %}
 </div>
+<style>
+  .download-my-data {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    height: 40px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    background-color: #4CAF50;
+    cursor: pointer;
+  }
+  .download-my-data:hover {
+    background-color: rgb(88, 185, 90);
+  }
+</style>
 {% endblock %}
