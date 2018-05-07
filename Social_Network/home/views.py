@@ -88,14 +88,19 @@ def change_friends(request, operation, pk):
 
 def like_posts(request, post_id):
     if request.method == 'POST':
-        posts = Post.objects.get(id=post_id)
-        count = posts.likes
-        count += 1
-        if count == 1:
-            posts.likes = count
-            posts.save()
-        if count == 2:
-            posts.likes = 0
-            posts.save()
-        return redirect("home:post")
-    return redirect('accounts:profile')
+        post = Post.objects.get(id=post_id)
+        post.likes.add(request.user)
+        # count = posts.likes
+        # count += 1
+        # posts.likes = count
+        # if count == 1:
+        #     count -= 1
+        #     posts.save()
+        # return redirect('home:post')
+    return redirect('home:post')
+
+def unlike_posts(request, post_id):
+    if request.method == 'POST':
+        post = Post.objects.get(id=post_id)
+        post.likes.remove(request.user)
+    return redirect('home:post')

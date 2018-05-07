@@ -17,15 +17,18 @@
                 <h2>{{ post.body }}</h2>
                 <p>{{ post.date }}</p>
                 <p>Posted by : {{ post.author }}</p>
-                <p class="like-text">{{ post.likes }} People Likes this</p>
-                <form method="post" action="/home/like/{{ post.id }}/">
+                <p class="like-text">{{ post.likes.count }} People Likes this</p>
+                {% if request.user in post.likes.all %}
+                    <form method="post" action="/home/unlike/{{ post.id }}/">
                     {% csrf_token %}
-                    {% if post.likes == 0 %}
+                        <input type="submit" value="Unlike" name="unlike-btn">
+                    </form>
+                {% else %}
+                    <form method="post" action="/home/like/{{ post.id }}/">
+                    {% csrf_token %}
                         <input type="submit" value="Like" name="like-btn">
-                    {% else %}
-                        <input type="submit" value="unLike" name="like-btn">
-                    {% endif %}
-                </form>
+                    </form>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

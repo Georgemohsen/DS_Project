@@ -8,7 +8,7 @@ class Post(models.Model):
     body = models.TextField()
     date = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name='likes')
 
     def __str__(self):
         return self.body

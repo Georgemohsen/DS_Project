@@ -204,6 +204,18 @@ input[value=unLike] {
     bottom:35px;
 }
 
+input[value=Unlike] {
+    width: 15%;
+    background-color: rgb(231, 102, 50);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    position:relative;
+    float:right;
+    bottom:35px;
+}
+
 .like-text {
   position:relative;
   left:280px;
