@@ -62,7 +62,7 @@ def profile_view(request, pk=None):
             user.userprofile.city = datas['city']
             user.userprofile.date_of_birth = datas['date of Birth']
             user.userprofile.save()
-            return render(request, 'accounts/profile.html',)
+            return render(request, 'accounts/profile.html', args)
 
 @login_required(login_url="/accounts/login/")
 def edit_profile(request):
