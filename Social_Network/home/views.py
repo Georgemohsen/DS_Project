@@ -6,7 +6,7 @@ from .models import Post, Friend
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
-
+from django.core.exceptions import ObjectDoesNotExist
 
 @login_required
 def status(request):

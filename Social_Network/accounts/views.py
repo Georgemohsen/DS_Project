@@ -6,7 +6,7 @@ from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from home.models import Friend
-
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def signup_view(request):
@@ -69,7 +69,10 @@ def edit_profile(request):
 @login_required
 def user_friends(request):
     others = User.objects.exclude(id=request.user.id)
-    friend = Friend.objects.get(current_user=request.user)
+    try: 
+        friend = Friend.objects.get(current_user=request.user) 
+    except ObjectDoesNotExist: 
+        return render(request, 'accounts/friends.html', {'others': others, 'friends': []}) 
     friends = friend.users.all()
     args = {'others': others, 'friends': friends}
     return render(request, 'accounts/friends.html', args)
