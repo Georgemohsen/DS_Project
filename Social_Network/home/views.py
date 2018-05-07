@@ -16,7 +16,7 @@ def status(request):
             instance = form.save(commit=False)
             instance.author = request.user
             instance.save()
-            display_posts(request)
+            # display_posts(request)
             return redirect('home:post')
     else:
         posts = Post.objects.all().order_by('-date')
@@ -39,13 +39,17 @@ def status(request):
         # else:
         #     args = {}
         filtered_posts = []
-        friend = Friend.objects.get(current_user=request.user)
-        if not friend:
-            return render(request, 'home/home.html', {})
-        friends = friend.users.all()
+        try:
+            friend = Friend.objects.get(current_user=request.user)
+            friends = friend.users.all()
+        except ObjectDoesNotExist:
+            friends = []
         for post in posts:
+            if post.author == request.user:
+                filtered_posts.append(post)
+                continue
             for friend in friends:
-                if post.author == request.user or post.author in friends:
+                if post.author in friends:
                     filtered_posts.append(post)
                     break
         args = {
@@ -54,23 +58,22 @@ def status(request):
         return render(request, 'home/home.html', args)
 
 
-def display_posts(request):
-    posts = Post.objects.all().order_by('-date')
-    friend = Friend.objects.get(current_user=request.user)
-    friends = friend.users.all()
-    flag = False
-    for post in posts:
-        for friend in friends:
-            if post.author == friend or post.author == request.user:
-                posts = posts.filter(Q(body__icontains=post.body) |
-                                     Q(author__username__icontains=post.author))
-                flag = True
-    if flag is True:
-        args = {'posts': posts}
-    else:
-        args = {}
-
-    return render(request, 'home/home.html', args)
+# def display_posts(request):
+#     posts = Post.objects.all().order_by('-date')
+#     friend = Friend.objects.get(current_user=request.user)
+#     friends = friend.users.all()
+#     flag = False
+#     for post in posts:
+#         for friend in friends:
+#             if post.author == friend or post.author == request.user:
+#                 posts = posts.filter(Q(body__icontains=post.body) |
+#                                      Q(author__username__icontains=post.author))
+#                 flag = True
+#     if flag is True:
+#         args = {'posts': posts}
+#     else:
+#         args = {}
+#     return render(request, 'home/home.html', args)
 
 
 def change_friends(request, operation, pk):
