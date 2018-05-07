@@ -9,4 +9,5 @@ urlpatterns = [path('signup/', views.signup_view, name="sign_up"),
                path('profile/<int:pk>/', views.profile_view, name="profile_with_pk"),
                path('editProfile/', views.edit_profile, name="editProfile"),
                path('friends/', views.user_friends, name="friends"),
-               path('download-my-data/', views.download_my_data, name="download-my-data")]
+               path('download-my-data/', views.download_my_data, name="download-my-data"),
+               path('upload-my-data/', views.upload_file, name='upload-my-data')]

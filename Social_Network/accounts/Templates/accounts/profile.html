@@ -14,6 +14,9 @@
       <!-- <input type="hidden" name="format" value="json"> -->
       <input type="submit" value="Download my data (JSON)" class="download-my-data">
     </form>
+      <a href="{% url 'accounts:upload-my-data' %}">
+      <input type="submit" value="Upload my data (JSON)" class="download-my-data">
+      </a>
   {% endif %}
 </div>
 <style>

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.urls import reverse
 from . import forms
 from .models import Post, Friend
@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
+import json
 
 @login_required
 def status(request):
@@ -104,3 +105,5 @@ def unlike_posts(request, post_id):
         post = Post.objects.get(id=post_id)
         post.likes.remove(request.user)
     return redirect('home:post')
+
+

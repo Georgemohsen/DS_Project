@@ -7,7 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from home.models import Friend, Post
 from django.core.exceptions import ObjectDoesNotExist
-
+from home.models import Friend
+from .models import location
+import json
+import media
+from media import data
 # Create your views here.
 def signup_view(request):
     if request.method == 'POST':
@@ -47,8 +51,18 @@ def profile_view(request, pk=None):
     else :
         user = request.user
     args = {'user': user}
-    return render(request, 'accounts/profile.html', args)
 
+    if upload_file:
+            name = str(request.user)
+            path = "media"+"/"+"data"+"/"+"data-"+name+".json"
+            with open(path, 'r') as f:
+               datas = json.load(f)
+            user.userprofile.about = datas['about']
+            user.userprofile.phone = datas['phone']
+            user.userprofile.city = datas['city']
+            user.userprofile.date_of_birth = datas['date of Birth']
+            user.userprofile.save()
+            return render(request, 'accounts/profile.html',)
 
 @login_required(login_url="/accounts/login/")
 def edit_profile(request):
@@ -76,6 +90,7 @@ def user_friends(request):
     friends = friend.users.all()
     args = {'others': others, 'friends': friends}
     return render(request, 'accounts/friends.html', args)
+
 
 from django.http import JsonResponse
 @login_required
@@ -128,3 +143,13 @@ def get_user_object(user, add_friends=False):
         for friend in friends:
             obj['friends'].append(friend.username)
     return obj
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = forms.UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:profile')
+    else:
+        form = forms.UploadFileForm()
+        return render(request, 'accounts/uploads.html', {'form': form})

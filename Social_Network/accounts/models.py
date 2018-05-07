@@ -23,3 +23,12 @@ def create_profile(sender, **kwargs):
 
 
 post_save.connect(create_profile, sender=User)
+
+
+def location(instance,filename):
+    return "%s/%s" % (instance.id, filename)
+
+
+class UserData(models.Model):
+    title = models.CharField(max_length=50)
+    file = models.FileField(upload_to='data/')

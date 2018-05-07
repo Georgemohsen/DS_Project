@@ -1,0 +1,11 @@
+{
+    "name": "George",
+    "about": "I Love Computer",
+    "date of Birth": "1996-06-16",
+    "phone": 122,
+    "city": "Cairo",
+    "friends": [
+        "Mario",
+        "Jack"
+    ]
+}
