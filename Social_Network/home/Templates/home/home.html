@@ -20,7 +20,11 @@
                 <p class="like-text">{{ post.likes }} People Likes this</p>
                 <form method="post" action="/home/like/{{ post.id }}/">
                     {% csrf_token %}
-                    <input type="submit" value="Like" name="like-btn">
+                    {% if post.likes == 0 %}
+                        <input type="submit" value="Like" name="like-btn">
+                    {% else %}
+                        <input type="submit" value="unLike" name="like-btn">
+                    {% endif %}
                 </form>
             </div>
         {% endfor %}

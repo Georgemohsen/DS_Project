@@ -6,7 +6,6 @@ from .models import Post, Friend
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.core.exceptions import ObjectDoesNotExist
 
 
 @login_required
@@ -40,9 +39,8 @@ def status(request):
         # else:
         #     args = {}
         filtered_posts = []
-        try:
-            friend = Friend.objects.get(current_user=request.user)
-        except ObjectDoesNotExist:
+        friend = Friend.objects.get(current_user=request.user)
+        if not friend:
             return render(request, 'home/home.html', {})
         friends = friend.users.all()
         for post in posts:
@@ -90,9 +88,11 @@ def like_posts(request, post_id):
         posts = Post.objects.get(id=post_id)
         count = posts.likes
         count += 1
-        posts.likes = count
         if count == 1:
-            count -= 1
+            posts.likes = count
             posts.save()
-        return redirect('home:post')
+        if count == 2:
+            posts.likes = 0
+            posts.save()
+        return redirect("home:post")
     return redirect('accounts:profile')
