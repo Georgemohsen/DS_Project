@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout
 from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from home.models import Friend
+from home.models import Friend, Post
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
@@ -82,19 +82,49 @@ from django.http import JsonResponse
 def download_my_data(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
+        obj = get_user_object(user)
         profile = user.userprofile
-        obj = {
-            'name': user.username,
-            'about': profile.about,
-            'date of Birth': profile.date_of_birth,
-            'phone': profile.phone,
-            'city': profile.city,
-            'friends': []
-        }
-        friend = Friend.objects.get(current_user=request.user)
-        friends = friend.users.all()
+        # add friends
+        try:
+            friend = Friend.objects.get(current_user=request.user)
+            friends = friend.users.all()
+        except ObjectDoesNotExist:
+            friends = []
         for friend in friends:
-            obj['friends'].append(friend.username)
+            obj['friends'].append( get_user_object(friend, add_friends=True) )
+        # add posts
+        obj['posts'] = []
+        posts = Post.objects.filter(author=request.user).all()
+        for post in posts:
+            p = {}
+            p['date'] = post.date
+            p['body'] = post.body
+            p['likes'] = []
+            for liked_user in post.likes.all():
+                p['likes'].append(liked_user.username)
+            obj['posts'].append(p)
         response = JsonResponse(obj, content_type='application/json', json_dumps_params={'indent': 4})
         response['Content-Disposition'] = 'attachment; filename="data.json"'
         return response
+
+
+def get_user_object(user, add_friends=False):
+    obj = {
+        'name': user.username,
+        'about': user.userprofile.about,
+        'date of Birth': user.userprofile.date_of_birth,
+        'age': user.userprofile.age,
+        'phone': user.userprofile.phone,
+        'city': user.userprofile.city,
+        'friends': []
+    }
+    # add friends
+    if add_friends:
+        try:
+            friend = Friend.objects.get(current_user=user)
+            friends = friend.users.all()
+        except ObjectDoesNotExist:
+            friends = []
+        for friend in friends:
+            obj['friends'].append(friend.username)
+    return obj
